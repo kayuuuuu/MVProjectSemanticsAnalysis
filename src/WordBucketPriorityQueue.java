@@ -1,73 +1,92 @@
 import java.util.ArrayList;
 
 public class WordBucketPriorityQueue {
-    ArrayList<Words> words;
-    ArrayList<Words> noRepeats = new ArrayList<Words>();
+    private static ArrayList<WordFreq> entries;
 
     public WordBucketPriorityQueue() {
-        words = new ArrayList<Words>();
+        entries = new ArrayList<>();
     }
 
-    public void add(Words word) {
-        if (words.contains(word)) {
-            word.addCount();
-            sort(words);
+    public void add(String item) {
+        add(item, 1);
+    }
+
+    private void sortBucket(int index) {
+        while (index > 0 && entries.get(index).getCount() > entries.get(index - 1).getCount()) {
+            switchIndexes(entries, index, index - 1);
         }
-        words.add(word);
-        word.addCount();
-        sort(words);
     }
 
-    private void sort(ArrayList<Words> words) {
-        for (int i = 0; i < words.size(); i++) {
-            for (int j = 0; j < words.size(); j++) {
-                compare(i, j);
+    private void switchIndexes(ArrayList<WordFreq> entries, int i1, int i2) {
+        WordFreq firstEntry = entries.get(i1);
+        WordFreq secondEntry = entries.get(i2);
 
+        entries.set(i1, secondEntry);
+        entries.set(i2, firstEntry);
+    }
+
+    private int getIndex(String item) {
+        for (int i = 0; i < entries.size(); i++) {
+            WordFreq entry = entries.get(i);
+            if (entry.getWord().equals(item)) {
+                return i;
             }
+        }
+        return -1;
+    }
 
+    public void add(String item, long count) {
+        int index = getIndex(item);
+        if (index == -1) {
+            WordFreq word = new WordFreq(item, 1);
+            entries.add(word);
+            index = entries.size() - 1;
+        } else {
+            WordFreq word = entries.get(index);
+            word.addCount(count);
+        }
+
+        sortBucket(index);
+    }
+
+    public long getCountOf(String target) {
+        for (WordFreq entry : entries) {
+            if (entry.getWord().equals(target)) {
+                return entry.getCount();
+            }
+        }
+        WordFreq entry = getEntryFor(target);
+        if (entry != null) {
+            return entry.getCount();
+        } else {
+            return 0;
         }
     }
 
-    public void compare(int i, int j) {
-        Words countOfWord = words.get(i);
-        Words compare = words.get(j);
-        if (compare.getCount() < countOfWord.getCount()) {
-            words.set(i, compare);
-            words.set(j, countOfWord);
+    private WordFreq getEntryFor(String target) {
+        for (WordFreq entry : entries) {
+            if (entry.getWord().equals(target)) {
+                return entry;
+            }
         }
-
+        return null;
     }
 
-    public void addNTimes(Words word, long times) {
-        for (long i = 0; i < times; i++) {
-            words.add(word);
+    public long size() {
+        long sum = 0;
+        for (WordFreq entry : entries) {
+            sum += entry.getCount();
         }
-    }
-
-    public int getCountOf(Words target) {
-        return target.getCount();
-    }
-
-    public int getSize() {
-        int totalSize = 0;
-        for (Words word : words) {
-            totalSize += word.getCount();
-        }
-        return totalSize;
+        return sum;
     }
 
     public int getNumUnique() {
-        return words.size();
+        return entries.size();
     }
 
     public String getMostFreq() {
-        return words.get(0).getWord();
-
+        if (size() == 0) return "";
+        else return entries.get(0).getWord();
     }
 }
 
-//    public String[] getNFreq(int n) {
-//
-//
-//}
-//
