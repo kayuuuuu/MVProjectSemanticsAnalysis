@@ -4,8 +4,14 @@ public class PredatoryWords {
     private boolean containsColloquial;
     private boolean isPredatory;
     private final int PERCENT_THRESHOLD = 15;
+    /*
+    stretch : use verb tenses to checko el predatorio palabras
+    espanolo
+    make a count variable that adds a isPredatoryCount every time we run a method (based on phrase)
 
-    public PredatoryWords(Document text, boolean isPredatory) {
+     */
+
+    public PredatoryWords(Document text) {
         this.list = text;
         this.isPredatory = isPredatory;
     }
