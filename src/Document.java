@@ -28,7 +28,7 @@ public class Document {
         return TextLib.readFileAsString(filename);
     }
 
-    private String[] splitIntoWords() {
+    public String[] splitIntoWords() {
         String[] words = removePunctuation().split("\\s+");
         return words;
     }
