@@ -15,6 +15,7 @@ public class PredatoryWords {
         this.list = text;
         this.isPredatory = isPredatory;
     }
+
     public double getPercent(Document text){
         String[] wordList = list.splitIntoWords();
         String[] wordText = text.splitIntoWords();
