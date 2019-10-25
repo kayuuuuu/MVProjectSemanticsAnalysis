@@ -12,7 +12,8 @@ public class Main {
 //        System.out.println(p.getPercent(text));
 
         Document dataSet = new Document("data/badWordsList.txt");
-        String[] wordList = dataSet.splitIntoWords();
+        String[] wordList = dataSet.splitIntoLines();
+        //each predatory word is now stored in a String array
 
 
     }
