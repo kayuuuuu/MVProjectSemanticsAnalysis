@@ -49,6 +49,16 @@ public class PredatoryWords {
     }
 
     public boolean isPredatory() {
-        return isPredatory;
+        String[] wordList = corpus.splitIntoWords();
+        String[] wordText = exampleText.splitIntoWords();
+        int count = 0;
+        for(String word : wordList){
+            for(String textWord : wordText){
+                if(textWord.equalsIgnoreCase(word)){
+                    count++;
+                }
+            }
+        }
+        return count > 1;
     }
 }
