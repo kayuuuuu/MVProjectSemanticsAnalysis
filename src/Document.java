@@ -33,6 +33,11 @@ public class Document {
         return words;
     }
 
+    public String[] splitIntoLines() {
+        String[] lines = text.toLowerCase().trim().split("\\n+");
+        return lines;
+    }
+
     public void setText(String newText) {
         this.text = newText;
         isSentencesCurrent = false;
@@ -200,6 +205,4 @@ public class Document {
         }
         return false;
     }
-
 }
-
