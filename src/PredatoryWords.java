@@ -1,9 +1,11 @@
 public class PredatoryWords {
-    private Document list;
+    private Document corpus;
     private boolean containsPredatory;
     private boolean containsColloquial;
     private boolean isPredatory;
+    private Document exampleText;
     private final int PERCENT_THRESHOLD = 15;
+
     /*
     stretch : use verb tenses to checko el predatorio palabras
     espanolo
@@ -11,14 +13,15 @@ public class PredatoryWords {
 
      */
 
-    public PredatoryWords(Document text) {
-        this.list = text;
+    public PredatoryWords(Document corpus, Document text) {
+        this.corpus = corpus;
         this.isPredatory = isPredatory;
+        this.exampleText = text;
     }
 
-    public double getPercent(Document text){
-        String[] wordList = list.splitIntoWords();
-        String[] wordText = text.splitIntoWords();
+    public double getPercent(){
+        String[] wordList = corpus.splitIntoWords();
+        String[] wordText = exampleText.splitIntoWords();
         int count = 0;
         for(String word : wordList){
             for(String textWord : wordText){
@@ -37,12 +40,12 @@ public class PredatoryWords {
         }
     }
 
-    public Document getList() {
-        return list;
+    public Document getCorpus() {
+        return corpus;
     }
 
-    public void setList(Document list) {
-        this.list = list;
+    public void setCorpus(Document corpus) {
+        this.corpus = corpus;
     }
 
     public boolean isPredatory() {
