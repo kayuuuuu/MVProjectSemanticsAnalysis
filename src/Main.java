@@ -10,23 +10,20 @@ public class Main {
         String[] testSentences = text.splitIntoLines();
         Document compareText = Document.getDocumentFrom("data/Test suite with boolean values .txt");
         String[] compareSentences = compareText.splitIntoLines();
-        for(String s  : compareSentences){
-            String[] booleans = s.split(",");
+        String[] booleans = new String[compareSentences.length];
+        for(int i = 0; i < compareSentences.length; i++){
+            booleans[i] = compareSentences[i].substring(compareSentences[i].indexOf(",") + 2);
         }
-
 
         int count = 0;
 
-        for (String sentence : testSentences) {
-            for ( boolean : compareSentences) {
-                PredatoryWords p = new PredatoryWords(predatoryWords, sentence, pronouns, verbs);
-                if (p.isPredatory() && p2.isPredatory()) {
+        for (int i = 0; i<testSentences.length; i++) {
+             PredatoryWords p = new PredatoryWords(predatoryWords, testSentences[i], pronouns, verbs);
+                if((p.isPredatory()) == Boolean.parseBoolean(booleans[i])){
                     count++;
-
                 }
 
 
-            }
 
 
         }
@@ -39,5 +36,7 @@ public class Main {
 
 
     }
+
+    
 
 }
