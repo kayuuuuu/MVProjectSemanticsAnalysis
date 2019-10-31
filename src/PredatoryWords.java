@@ -2,7 +2,9 @@ import java.util.ArrayList;
 
 public class PredatoryWords {
     private Document predatoryCorpus;
-    private Document exampleText;
+    private String exampleText;
+    private Document verbs;
+    private Document pronoun;
     private final int PERCENT_THRESHOLD = 15;
     String[] predatoryWords;
     String[] verbTense;
@@ -10,19 +12,20 @@ public class PredatoryWords {
     String[] exampleTextwordList;
     private boolean isPredatory;
 
-    //.equalsIgnoreCase !!!!
-
     /*
-  test data sets and see if the proximity method ( distance between 2 words) would be helpful
-
+remove punctuation ??????????????????
 
      */
 
-    public PredatoryWords(Document corpus, Document text) {
-        this.predatoryCorpus = corpus;
+    public PredatoryWords(Document predatoryWords, String text, Document pronouns, Document verbs) {
+        this.predatoryCorpus = predatoryWords;
         this.exampleText = text;
-        this.predatoryWords = corpus.splitIntoWords();
-        this.exampleTextwordList = exampleText.splitIntoWords();
+        this.verbs = verbs;
+        this.pronoun = pronouns;
+        this.predatoryWords = predatoryWords.splitIntoLines();
+        this.exampleTextwordList = exampleText.split("\\s+");
+        this.verbTense = verbs.splitIntoLines();
+        this.pronouns = pronouns.splitIntoLines();
     }
 
     //getters and setters
@@ -30,32 +33,22 @@ public class PredatoryWords {
         return predatoryCorpus;
     }
 
-
-    // actual methods
-//    public double getPercent() {
-//        int count = 0;
-//        for (String word : predatoryWords) {
-//            for (String textWord : exampleTextwordList) {
-//                if (textWord.equalsIgnoreCase(word)) {
-//                    count++;
-//                }
-//            }
-//        }
-//        return (double) count / exampleTextwordList.length;
-//    }
-
-
-//    public void setPredatory(double percentage) {
-//        if (percentage > PERCENT_THRESHOLD) {
-//            isPredatory = true;
-//        }
-//    }
+    public String removePunctuation(String exampleText) {
+        String newPassage = "";
+        for (int i = 0; i < exampleText.length(); i++) {
+            String letter = exampleText.substring(i, i + 1);
+            if ("qwertyuiopasdfghjklzxcvbnm1234567890QWERTYUIOPASDFGHJKLZXCVBNM ".contains(letter)) {
+                newPassage += letter;
+            }
+        }
+        return newPassage;
+    }
 
     public boolean containsPredatory() {
         int count = 0;
         for (String word : predatoryWords) {
             for (String textWord : exampleTextwordList) {
-                if (textWord.equalsIgnoreCase(word)) {
+                if ((removePunctuation(exampleText)).equalsIgnoreCase(word.toLowerCase())) {
                     count++;
                 }
             }
@@ -67,7 +60,7 @@ public class PredatoryWords {
     public boolean containsPredatoryVerbTense() {
         for (String verb : verbTense) {
             for (String text : exampleTextwordList) {
-                if (text.equalsIgnoreCase(verb)) {
+                if (text.equalsIgnoreCase(verb.toLowerCase())) {
                     return true;
                 }
             }
@@ -78,7 +71,7 @@ public class PredatoryWords {
     public boolean isPronoun() {
         for (String pronoun : pronouns) {
             for (String text : exampleTextwordList) {
-                if (text.equalsIgnoreCase(pronoun)) {
+                if (text.equalsIgnoreCase(pronoun.toLowerCase())) {
                     return true;
                 }
             }
@@ -89,6 +82,5 @@ public class PredatoryWords {
 
     public boolean isPredatory() {
         return isPronoun() && containsPredatoryVerbTense() && containsPredatory();
-
     }
 }

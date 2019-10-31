@@ -1,18 +1,24 @@
+import javax.print.Doc;
 import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-//        Document text = new Document("anal");
-//        Document list = Document.getDocumentFrom("data/badWordsList.txt");
-//        ArrayList<String> words = list.getUniqueWords();
-//        for(String word : words){
-//            System.out.println(word);
-//        }
-//        PredatoryWords p = new PredatoryWords(list);
-//        System.out.println(p.getPercent(text));
+        Document text = Document.getDocumentFrom("data/Test suite .txt");
+        Document predatoryWords = Document.getDocumentFrom("data/threatening_guilting_scare tactic words.txt");
+        Document pronouns = Document.getDocumentFrom("data/Pronouns and nouns.txt");
+        Document verbs = Document.getDocumentFrom("data/Verb tense.txt");
+        String[] testSentences = text.splitIntoLines();
+        for (String sentence : testSentences) {
+            PredatoryWords p = new PredatoryWords(predatoryWords, sentence, pronouns, verbs);
+//            System.out.println(sentence + ",\t" + p.isPredatory());
+//            System.out.println(sentence + " " + p.isPronoun());
+//            System.out.println(sentence + " " + p.containsPredatoryVerbTense());
+            System.out.println(sentence + " " + p.containsPredatory());
 
-        Document dataSet = new Document("data/badWordsList.txt");
-        String[] wordList = dataSet.splitIntoLines();
+
+        }
+
+
         //each predatory word is now stored in a String array
 
 

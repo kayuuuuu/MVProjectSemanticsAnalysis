@@ -48,7 +48,7 @@ public class Document {
         return getWords().length;
     }
 
-    private String removePunctuation() {
+    public String removePunctuation() {
         String newPassage = "";
         for (int i = 0; i < text.length(); i++) {
             String letter = text.substring(i, i + 1);
@@ -59,7 +59,7 @@ public class Document {
         return newPassage;
     }
 
-    private ArrayList<String> splitIntoSentences() {
+    public ArrayList<String> splitIntoSentences() {
         ArrayList<String> output = new ArrayList<>();
 
         Locale locale = Locale.US;
