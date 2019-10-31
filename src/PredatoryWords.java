@@ -7,10 +7,10 @@ public class PredatoryWords {
     private Document verbs;
     private Document pronoun;
     private final int PERCENT_THRESHOLD = 15;
-    String[] predatoryWords;
-    String[] verbTense;
-    String[] pronouns;
-    String[] exampleTextwordList;
+    private String[] predatoryWords;
+    private String[] verbTense;
+    private String[] pronouns;
+    private String[] exampleTextwordList;
     private boolean isPredatory;
 
     /*
