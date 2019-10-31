@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class PredatoryWords {
     private Document predatoryCorpus;
@@ -23,7 +24,7 @@ remove punctuation ??????????????????
         this.verbs = verbs;
         this.pronoun = pronouns;
         this.predatoryWords = predatoryWords.splitIntoLines();
-        this.exampleTextwordList = exampleText.split("\\s+");
+        this.exampleTextwordList = removePunctuation(exampleText).split("\\s+");
         this.verbTense = verbs.splitIntoLines();
         this.pronouns = pronouns.splitIntoLines();
     }
@@ -48,12 +49,12 @@ remove punctuation ??????????????????
         int count = 0;
         for (String word : predatoryWords) {
             for (String textWord : exampleTextwordList) {
-                if ((removePunctuation(exampleText)).equalsIgnoreCase(word.toLowerCase())) {
+                if (textWord.equalsIgnoreCase(word)) {
                     count++;
                 }
             }
         }
-        return count > 1;
+        return count >= 1;
     }
 
     //
